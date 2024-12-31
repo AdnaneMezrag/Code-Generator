@@ -119,7 +119,7 @@ namespace Business_Layer{{
         }
         public static string GenerateBusinessForeignAttribute(clsForeignAttribute foreignAttribute)
         {
-            string Content = $@"        public cls{foreignAttribute.ParentTableName} {foreignAttribute.ParentTableName} {{set;get}}
+            string Content = $@"        public cls{foreignAttribute.ParentTableName} {foreignAttribute.ParentTableName} {{set;get;}}
 ";
             return Content;
         }
@@ -566,10 +566,10 @@ namespace DataAccess_Layer{{
         public static string GenerateUpdateForDataLayer()
         {
 
-            string Content = $@"    public static int Update{Table.Name}(" +
+            string Content = $@"    public static bool Update{Table.Name}(" +
                 GenerateAttributesParameters(true) + "){\n";
 
-            Content += $@"        rowsAffected = 0;
+            Content += $@"        int rowsAffected = 0;
 
         SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 ";
@@ -637,7 +637,7 @@ namespace DataAccess_Layer{{
 
         public static string GenerateGetInfoByIDForDataLayer()
         {
-            string Content = $@"    public static bool Get{Table.Name}InfoByID(" +
+            string Content = $@"    public static bool Get{Table.Name}InfoBy{Table.PrimaryAttribute.Name}(" +
     GenerateAttributesParameters(true,"ref ") + "){\n";
 
             Content += $@"        bool isFound = false;
